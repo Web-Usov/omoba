@@ -1,0 +1,49 @@
+schema: spec-driven
+
+context: |
+  Open MOBA is a platform-first, moddable multiplayer game platform.
+  Git is the source of truth for product intent, specifications, architecture decisions, code, and tests.
+  The official/reference game must use the same public Mod API available to external creators.
+  Prefer machine-verifiable requirements and acceptance criteria whenever practical.
+  Preserve server authority and separation of simulation from presentation unless an accepted ADR explicitly changes those principles.
+  Before planning architecture-impacting work, read docs/vision/principles.md, docs/architecture/overview.md, relevant ADRs, and current specs.
+
+rules:
+  proposal:
+    - Keep the proposal focused on why the change is needed and what outcome is required.
+    - Include explicit Scope and Non-goals.
+    - Identify affected capabilities and whether a new or updated ADR is required.
+    - Do not silently introduce new product or architecture decisions.
+
+  specs:
+    - Describe observable behavior and system guarantees rather than implementation details unless the boundary itself is a requirement.
+    - Use normative language such as SHALL, MUST, SHOULD, and MUST NOT deliberately.
+    - Make scenarios concrete and testable; prefer Given/When/Then where useful.
+    - Cover relevant failure, security, concurrency, and compatibility cases for networking, modding, persistence, or public API changes.
+
+  design:
+    - State system boundaries, invariants, interfaces, data flow, and ownership explicitly.
+    - Include alternatives considered and explain why the chosen approach is preferred.
+    - Include a verification strategy covering tests, simulations, benchmarks, or tooling as appropriate.
+    - Reference existing ADRs. If a new fundamental decision is required, mark it as ADR required instead of treating it as an implementation detail.
+    - Keep engine/platform decisions separate from reference-game rules whenever possible.
+
+  tasks:
+    - Break work into small, ordered tasks that can be implemented and verified independently where practical.
+    - Each implementation task must include or be paired with appropriate verification work.
+    - Prefer tasks that one coding-agent session can complete without broad unrelated changes.
+    - Do not add work outside the approved scope simply because it is convenient during implementation.
+
+operations:
+  apply:
+    guidance:
+      - Implement the approved specification and design; do not reinterpret product intent during coding.
+      - If implementation reveals a conflict with scope, architecture invariants, current specs, or accepted ADRs, stop and update the change instead of improvising around it.
+      - Do not introduce a new fundamental architecture decision without an accepted ADR.
+      - Run the strongest available automated verification before marking a task complete.
+
+  archive:
+    guidance:
+      - Archive only after implementation and verification are complete.
+      - Ensure shipped behavior is reflected in current specs.
+      - Record any accepted deviation from the original design before archiving.
