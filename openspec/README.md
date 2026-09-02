@@ -34,6 +34,23 @@ openspec update
 
 Следует выбирать только те AI tools, которые реально используются на машине. Сгенерированные tool-specific skills/commands коммитятся, когда проект фактически принимает соответствующий execution tool.
 
+## Автоматическая валидация
+
+GitHub Actions workflow `.github/workflows/spec-integrity.yml` запускается для каждого pull request и после push в `main`.
+
+CI использует явно зафиксированные версии Node.js и OpenSpec CLI, чтобы один и тот же commit проверялся воспроизводимо. Изменение этих версий должно быть отдельным осознанным tooling change, а не следствием установки `@latest` во время CI run.
+
+Минимальный repository contract:
+
+```bash
+openspec validate --all --strict --no-interactive
+openspec validate --archived --no-interactive
+```
+
+Первая команда проверяет current specs и active changes. Вторая гарантирует, что archived changes не содержат незавершённых task checkboxes.
+
+Локальная установка `@latest` допустима для human setup и обновления tooling, но verification evidence PR должно учитывать версии, используемые CI.
+
 ## Жизненный цикл change
 
 Для значимых behavioral или architecture changes:

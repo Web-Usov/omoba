@@ -1,0 +1,47 @@
+name: Spec Integrity
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+concurrency:
+  group: spec-integrity-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate-openspec:
+    name: Validate OpenSpec
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      OPENSPEC_TELEMETRY: "0"
+      OPENSPEC_NO_UPDATE_CHECK: "1"
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24.20.0"
+
+      - name: Install pinned OpenSpec CLI
+        run: npm install --global @fission-ai/openspec@1.11.0
+
+      - name: Show tool versions
+        run: |
+          node --version
+          npm --version
+          openspec --version
+
+      - name: Validate current specs and active changes
+        run: openspec validate --all --strict --no-interactive
+
+      - name: Validate archived changes
+        run: openspec validate --archived --no-interactive
