@@ -36,6 +36,6 @@
 
 ## Follow-up после merge
 
-- [ ] Создать отдельный OpenSpec change для repository/code bootstrap.
+Следующий отдельный OpenSpec change: `bootstrap-repository`.
 
-Follow-up task не блокирует завершение текущего architecture change и не должна выполняться в этом PR.
+Follow-up не является delivery scope этого architecture change и не блокирует его archive.

@@ -1,10 +1,10 @@
 # Design: foundation stack Open MOBA
 
-> Статус: Proposed. Требуется Design Gate.
+> Статус: Accepted. Design Gate пройден 2026-09-03.
 
 ## 1. Decision summary
 
-Предлагаемый foundation stack:
+Принятый foundation stack:
 
 ```text
 Godot 4.7.x .NET
@@ -214,7 +214,7 @@ Mods не получают прямой доступ к CLR objects, filesystem,
 
 ### Initial adapter: MoonSharp
 
-Для первой реализации предлагается MoonSharp, потому что он:
+Для первой реализации выбран MoonSharp, потому что он:
 
 - полностью managed;
 - документирует hard sandbox presets;
@@ -308,13 +308,13 @@ Unified `openmoba` CLI остаётся желаемым последующим 
 
 ## 11. ADRs
 
-Design сопровождается тремя Proposed ADR:
+Design сопровождается тремя Accepted ADR:
 
 - `ADR-001-godot-client-shell.md`;
 - `ADR-002-csharp-simulation-and-server.md`;
 - `ADR-003-initial-mod-runtime.md`.
 
-После Design Gate их статус меняется на `Accepted` без изменения содержания решения, если owner не запросит корректировки.
+Design Gate пройден; ADR приняты owner и имеют статус `Accepted`.
 
 ## 12. References
 

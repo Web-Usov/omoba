@@ -1,47 +1,57 @@
 # Обзор архитектуры
 
-> Статус: evolving. Этот документ намеренно описывает только высокоуровневые boundaries, совместимые с текущим product vision. Конкретные технологические решения должны фиксироваться в ADR и пока здесь не считаются принятыми.
+> Статус: evolving. Этот документ описывает текущие высокоуровневые boundaries. Принятые фундаментальные решения перечислены здесь для навигации, а нормативным источником конкретного решения остаётся соответствующий Accepted ADR.
 
 ## Архитектурное направление
 
-Open MOBA должна отделять platform infrastructure от game-specific policy, чтобы официальную игру можно было реализовать через те же публичные extension mechanisms, что и community games.
+Open MOBA отделяет platform infrastructure от game-specific policy, чтобы официальную игру можно было реализовать через те же публичные extension mechanisms, что и community games.
 
-Предварительная модель boundaries:
+Принятый foundation boundary:
 
 ```text
-Presentation / Client
+Godot 4.7.x .NET
+Presentation / Client / Editor Shell
         |
         v
-Public Client Integration
+OpenMoba.Client.Godot
         |
         v
-Simulation <----> Networking
+Engine-neutral shared contracts
+        ^
+        |
+Standalone OpenMoba.Server (.NET 10)
+        |
+        +--> OpenMoba.Sim (plain .NET, no Godot dependency)
+        +--> OpenMoba.ModRuntime
+        +--> OpenMoba.Networking [transport/replication deferred]
         |
         v
-Authoritative Server
-        |
-        v
-Public Mod Runtime / SDK
-        |
-        v
-Games and reusable gameplay packages
+Authoritative match process
 ```
 
-Точные технологии, process model, runtime boundaries и APIs внутри этих блоков должны быть определены отдельными архитектурными решениями до начала реализации.
+Gameplay packages и reference game должны взаимодействовать с simulation через публичные contracts/capabilities. Конкретный scripting interpreter является adapter detail и не должен протекать в public Mod API.
+
+## Принятые foundation decisions
+
+- `ADR-001-godot-client-shell.md`: Godot 4.7.x .NET используется как presentation/client/editor shell, но не владеет authoritative gameplay simulation.
+- `ADR-002-csharp-simulation-and-server.md`: authoritative simulation реализуется как plain C#/.NET libraries без Godot dependency; production dedicated server является standalone .NET process.
+- `ADR-003-initial-mod-runtime.md`: Mod API является capability-based и interpreter-neutral; MoonSharp hard sandbox выбран как initial replaceable scripting adapter, а не permanent public runtime contract.
+
+Shared libraries на foundation этапе используют `net8.0` compatibility surface для текущей Godot integration; standalone server и CLI ориентированы на .NET 10 LTS. Compatibility target должен пересматриваться отдельно и не является бессрочным platform contract.
 
 ## Желаемые свойства системы
 
 ### Headless-first simulation
 
-Core gameplay simulation должна запускаться без графического presentation layer. Это необходимо для dedicated servers, автоматических тестов, long-running simulations, benchmarks и agent-driven verification.
+Core gameplay simulation должна запускаться без graphical presentation layer. Это необходимо для dedicated servers, автоматических тестов, long-running simulations, benchmarks и agent-driven verification.
 
 ### Authoritative multiplayer
 
-Server владеет authoritative gameplay state и обрабатывает client commands. Network architecture с самого начала должна явно определять trust boundaries.
+Server владеет authoritative gameplay state и обрабатывает client commands. Client input рассматривается как недоверенный intent; конкретные transport, replication и prediction strategies пока не определены.
 
 ### Публичные gameplay capabilities
 
-Официальная игра по возможности должна зависеть от публичных extension contracts, а не от privileged internal APIs.
+Official/reference game не должна иметь privileged gameplay APIs. Если first-party gameplay требует скрытого engine hook, public Mod API считается недостаточным и должен быть расширен через обычный architecture/spec workflow.
 
 ### Многоуровневый creator experience
 
@@ -51,9 +61,11 @@ Server владеет authoritative gameplay state и обрабатывает c
 2. sandboxed scripting;
 3. visual authoring tools, построенные поверх стабильных underlying representations.
 
+Visual tooling не должен становиться отдельным gameplay runtime или обходить public contracts.
+
 ### Reusable packages
 
-Gameplay capabilities должны быть composable, чтобы игры могли переиспользовать platform и genre packages вместо копирования целых implementations.
+Gameplay capabilities должны быть composable, чтобы games могли переиспользовать platform и genre packages вместо копирования целых implementations.
 
 Возможные будущие package families:
 
@@ -67,21 +79,23 @@ Gameplay capabilities должны быть composable, чтобы игры мо
 @openmoba/rts
 ```
 
-Названия и boundaries являются иллюстративными, пока они не будут специфицированы и приняты.
+Названия и точные boundaries остаются иллюстративными, пока они не будут специфицированы и приняты.
 
-## Решения, которые намеренно не принимаются этим документом
+## Решения, которые намеренно остаются открытыми
 
-Этот overview пока не определяет:
+Foundation architecture пока НЕ определяет:
 
-- game engine;
-- основной implementation language;
-- ECS или альтернативную world model;
-- язык или runtime для mod scripting;
+- ECS library или окончательную world/entity model;
+- simulation tick rate и scheduling model;
 - network transport;
 - replication strategy;
-- simulation tick rate;
-- package manifest format;
-- editor technology;
-- persistence и backend services.
+- prediction, reconciliation и rollback;
+- serialization format;
+- package manifest/resolution format;
+- окончательную public Mod API surface;
+- visual editor technology/UX;
+- Workshop/backend/persistence;
+- production deployment infrastructure;
+- конкретные gameplay systems reference MOBA.
 
-Каждое существенное решение должно проходить через spec-driven workflow проекта и фиксироваться в ADR, когда это уместно.
+Эти решения должны приниматься отдельными OpenSpec changes и ADR, когда появляется достаточный контекст и проверяемые требования.
