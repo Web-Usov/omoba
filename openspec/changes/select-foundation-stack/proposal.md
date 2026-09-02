@@ -28,14 +28,14 @@ Open MOBA уже зафиксировала ключевые архитекту�
 
 В рамках change необходимо:
 
-- сравнить разумные варианты game engine/client shell, включая Godot и альтернативы, релевантные текущим требованиям;
+- сравнить разумные варианты game engine/client shell;
 - выбрать основной implementation language/runtime для simulation core;
 - определить границу между presentation/client integration и simulation;
 - определить стартовую модель dedicated server;
-- выбрать начальный подход к mod scripting/runtime с учётом sandboxing и будущей replaceability;
+- выбрать начальный подход к mod scripting/runtime с учётом sandboxing и future replaceability;
 - определить dependency direction между foundation components;
-- определить минимальные CLI/headless требования, необходимые для agent-first development;
-- оформить одно или несколько ADR для принятых фундаментальных решений;
+- определить минимальные CLI/headless требования для agent-first development;
+- оформить ADR для фундаментальных решений;
 - зафиксировать verification strategy для первого code bootstrap.
 
 ## Non-goals
@@ -55,103 +55,95 @@ Open MOBA уже зафиксировала ключевые архитекту�
 - окончательную public Mod API surface;
 - конкретные gameplay systems reference MOBA.
 
-Эти решения должны приниматься отдельными changes после появления соответствующего контекста.
-
 ## Constraints
 
 Выбранный foundation stack должен сохранять действующие project principles:
 
 - reference game не получает privileged gameplay hooks;
-- authoritative simulation должна быть отделена от presentation;
-- simulation должна запускаться headless;
-- dedicated-server workflow должен быть автоматизируемым;
-- ключевые проверки должны быть доступны из CLI/CI без ручной работы в editor;
-- durable project knowledge не должно зависеть от одного AI vendor/tool;
-- mod runtime не должен требовать выполнения произвольного недоверенного native/.NET-кода от community mods;
-- решение должно быть реалистичным для solo + AI-agent development.
+- authoritative simulation отделена от presentation;
+- simulation запускается headless;
+- dedicated-server workflow автоматизируем;
+- ключевые проверки доступны из CLI/CI без ручной работы в editor;
+- durable project knowledge не зависит от одного AI vendor/tool;
+- community mods не требуют выполнения произвольного недоверенного native/.NET-кода;
+- решение реалистично для solo + AI-agent development.
 
 ## Evaluation criteria
 
-Design должен сравнивать варианты как минимум по следующим критериям:
+Design сравнивает варианты по следующим критериям:
 
-1. **Agent delegability** — build/test/run/debug доступны через CLI и хорошо автоматизируются.
-2. **Simulation isolation** — authoritative core может существовать без renderer/editor.
-3. **Server viability** — headless/dedicated execution не является вторичным hack.
-4. **Mod safety** — есть реалистичный путь к sandboxed public scripting API.
-5. **Repository friendliness** — text-based artifacts и predictable project structure подходят для Git/review/agents.
-6. **Performance headroom** — стек не создаёт очевидного потолка для target genre на ранней стадии.
-7. **Cross-platform support** — desktop client и Linux server должны быть практичными целями.
-8. **Licensing/ownership** — stack не должен создавать неприемлемый platform lock-in или экономический риск.
-9. **Replaceability** — временные adapters/transports/tooling можно заменить без переписывания gameplay contracts.
-10. **Solo-development cost** — предпочтение меньшему числу runtimes/languages и меньшему operational overhead при сопоставимом результате.
+1. Agent delegability.
+2. Simulation isolation.
+3. Server viability.
+4. Mod safety.
+5. Repository friendliness.
+6. Performance headroom.
+7. Cross-platform support.
+8. Licensing/ownership.
+9. Replaceability.
+10. Solo-development cost.
 
 ## Candidate direction to evaluate
 
-Это не утверждённое решение, а baseline для design/research:
+Это baseline для design/research, а не автоматически принятое решение:
 
 ```text
-Godot (.NET)           -> presentation / client / editor shell
+Godot (.NET) -> presentation / client / editor shell
         |
         v
 OpenMoba.Client adapter
         |
         v
-OpenMoba.Sim (plain .NET / C#)
-        |
-        +------ OpenMoba.Networking
-        |
-        +------ OpenMoba.ModApi
-        |
-        v
+shared contracts
+
 OpenMoba.Server
         |
-        v
-sandboxed gameplay scripting (Lua candidate)
+        +---- OpenMoba.Sim (plain .NET / C#)
+        +---- OpenMoba.ModRuntime
+        +---- OpenMoba.Networking (later decision)
 ```
 
-Design обязан проверить эту схему против существенных альтернатив, а не принимать её только потому, что она обсуждалась ранее.
+## Capabilities
 
-## Affected capabilities
+### New Capabilities
 
-Первично затрагиваются будущие capabilities:
+- `foundation-runtime` — общие runtime boundaries и допустимое направление dependencies.
+- `simulation-hosting` — headless hosting contract authoritative simulation.
+- `client-integration` — contract между game engine/presentation и platform core.
+- `dedicated-server` — отдельный authoritative server host.
+- `mod-runtime` — sandboxed и replaceable scripting runtime boundary.
+- `agent-verification` — CLI/headless contract для machine-verifiable development.
 
-- `foundation-runtime`;
-- `simulation-hosting`;
-- `client-integration`;
-- `dedicated-server`;
-- `mod-runtime`;
-- `agent-verification`.
+### Modified Capabilities
 
-Текущих behavioral specs для этих capabilities ещё нет; они будут созданы после Intent Gate как часть этого change.
+Нет: проект greenfield, current specs для этих capabilities ещё отсутствуют.
+
+## Impact
+
+Решение определит будущую структуру solution/repository, базовые runtimes, dependency boundaries, минимальный toolchain и направление первого code bootstrap. Оно не добавляет gameplay behavior и не реализует vertical slice.
 
 ## ADR required
 
-Да.
+Да. Ожидаются ADR для:
 
-Как минимум ожидаются ADR для:
-
-- выбора client/game engine;
-- выбора simulation language/runtime и dependency boundary;
-- выбора начального mod runtime model.
-
-Количество ADR может быть скорректировано в design, если решения логически лучше объединить или разделить.
+- client/game engine;
+- simulation language/runtime и server boundary;
+- initial mod runtime model.
 
 ## Expected outcome
 
-После завершения design и approval мы должны иметь достаточно ясную foundation architecture, чтобы следующий implementation change мог создать repository/code skeleton без повторного обсуждения базовых runtime boundaries.
+После design approval следующий implementation change сможет создать repository/code skeleton без повторного обсуждения базовых runtime boundaries.
 
-Первый code bootstrap после этого решения должен позволить в перспективе выполнить machine-verifiable вертикаль:
+Первый code bootstrap должен сделать возможной следующую machine-verifiable вертикаль:
 
 ```text
 headless simulation starts
-        +
-server starts
-        +
-client shell starts
-        +
-client/server exchange minimal state
-        +
-all core checks can run from CLI/CI
++
+standalone server starts
++
+client shell starts/headless-loads
++
+core checks run from CLI/CI
 ```
 
 Само создание этой вертикали в scope текущего proposal не входит.
