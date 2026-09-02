@@ -1,51 +1,51 @@
-# Project Principles
+# Принципы проекта
 
-These principles guide product, architecture, and development decisions for Open MOBA. They are intentionally small in number and should change only when there is a strong reason to revisit the project's foundations.
+Эти принципы направляют продуктовые, архитектурные и инженерные решения Open MOBA. Их намеренно немного; изменять их следует только при наличии веской причины пересмотреть фундамент проекта.
 
-## 1. Platform first, game second
+## 1. Сначала платформа, потом игра
 
-The platform is the primary product. The official MOBA exists to validate the platform and should not bypass it through privileged gameplay hooks.
+Платформа — основной продукт. Официальная MOBA существует для проверки платформы и не должна обходить её через privileged gameplay hooks.
 
-## 2. The official game uses the public Mod API
+## 2. Официальная игра использует публичный Mod API
 
-If the reference game requires capabilities unavailable to third-party creators, the public API is incomplete. Official gameplay should dogfood the same APIs, package boundaries, and workflows exposed to external creators.
+Если reference game требует возможностей, недоступных сторонним creators, публичный API неполон. Официальный gameplay должен использовать те же APIs, package boundaries и workflows, которые доступны внешним разработчикам.
 
-## 3. Server authoritative by default
+## 3. Server-authoritative по умолчанию
 
-Clients provide player intent. The authoritative server owns game state and resolves gameplay outcomes unless an explicitly documented design decision says otherwise.
+Клиент передаёт намерение игрока. Authoritative server владеет игровым состоянием и определяет gameplay outcomes, если отдельное принятое архитектурное решение явно не устанавливает иное.
 
-## 4. Simulation is independent from presentation
+## 4. Simulation не зависит от presentation
 
-Gameplay simulation should not depend on rendering, editor state, or a graphical environment. Headless simulation must be possible for dedicated servers, automated tests, benchmarks, and AI-agent verification.
+Gameplay simulation не должна зависеть от rendering, состояния редактора или графической среды. Headless simulation должна быть возможна для dedicated servers, автоматических тестов, benchmarks и verification AI-агентами.
 
-## 5. Moddability is an architectural requirement
+## 5. Moddability — архитектурное требование
 
-Heroes, abilities, items, units, game modes, maps, rules, and reusable gameplay packages should be designed for extension rather than hard-coded around the first game.
+Герои, способности, предметы, units, game modes, карты, правила и reusable gameplay packages должны проектироваться с расчётом на расширение, а не быть hard-coded под первую игру.
 
-## 6. Agent-first development
+## 6. Agent-first разработка
 
-The project is initially developed by one human orchestrator with AI agents. Prefer text-based, versioned, CLI-accessible, testable workflows that agents can execute and verify without fragile manual editor procedures.
+Изначально проект разрабатывается одним человеком-оркестратором с AI-агентами. Предпочтение отдаётся text-based, versioned, CLI-accessible и testable workflows, которые агенты способны выполнять и проверять без хрупких ручных процедур в редакторе.
 
-## 7. Git is the source of truth
+## 7. Git — source of truth
 
-Durable knowledge belongs in the repository: specifications, ADRs, architecture documentation, code, tests, and review history. Chat history, model memory, IDE state, and vendor-specific agent sessions are not authoritative project knowledge.
+Долговременные знания должны находиться в repository: specs, ADR, архитектурной документации, коде, тестах и review history. История чатов, память модели, состояние IDE и vendor-specific agent sessions не являются authoritative knowledge проекта.
 
-## 8. Changes should be machine-verifiable whenever practical
+## 8. Изменения должны быть machine-verifiable, когда это практично
 
-Requirements should produce objective acceptance criteria wherever possible. Agents should be able to prove implementation quality through tests, headless simulations, validation commands, benchmarks, or other reproducible checks.
+Requirements должны приводить к объективным acceptance criteria везде, где это возможно. Агент должен иметь возможность доказать качество реализации тестами, headless simulations, validation commands, benchmarks или другими воспроизводимыми проверками.
 
-## 9. Avoid premature creator tooling
+## 9. Не строить creator tooling преждевременно
 
-Stable underlying APIs come before expensive visual editors. Declarative formats, scripting, validation, and CLI workflows should prove the creator model before node editors, terrain tooling, or workshop UX are built.
+Стабильные underlying APIs важнее дорогих визуальных редакторов. Declarative formats, scripting, validation и CLI workflows должны сначала доказать creator model; node editors, terrain tooling и Workshop UX появляются позже.
 
-## 10. Prefer replaceable development infrastructure
+## 10. Предпочитать заменяемую инфраструктуру разработки
 
-Specifications and project knowledge should remain useful if the team changes coding agents, IDEs, orchestration tools, CI vendors, or hosting providers. Avoid binding core project knowledge to a single AI product.
+Specs и знания проекта должны оставаться полезными при смене coding agents, IDE, orchestration tools, CI vendors или hosting providers. Нельзя привязывать ключевые знания проекта к одному AI-продукту.
 
-## 11. Keep the immutable core small
+## 11. Immutable core должен быть небольшим
 
-Engine-level primitives should be limited to capabilities that are difficult, unsafe, or inefficient to implement as gameplay content. Game-specific policy belongs in public packages and mods whenever feasible.
+На уровне engine должны находиться только возможности, которые сложно, небезопасно или неэффективно реализовывать как gameplay content. Game-specific policy по возможности принадлежит публичным packages и mods.
 
-## 12. Explicit decisions beat accidental architecture
+## 12. Явные решения лучше случайной архитектуры
 
-Costly, cross-cutting, or difficult-to-reverse technical choices should be captured as Architecture Decision Records before they become hidden assumptions in the codebase.
+Дорогие, cross-cutting или труднообратимые технические решения должны фиксироваться в Architecture Decision Records до того, как превратятся в скрытые assumptions внутри codebase.

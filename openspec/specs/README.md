@@ -1,20 +1,11 @@
-# Current Specifications
+# Актуальные спецификации
 
-This directory contains the current behavioral and architectural specifications of Open MOBA.
+Этот каталог описывает текущее принятое поведение Open MOBA и гарантии системы.
 
-Specifications describe what the system is expected to do now. They should capture stable requirements, invariants, public contracts, and acceptance criteria that remain relevant after a change is completed.
+Specs отвечают на вопрос: **что система обязана делать сейчас?**
 
-Do not use this directory for implementation journals, temporary plans, or unaccepted ideas.
+Они не являются roadmap, backlog или местом для будущих идей.
 
-Planned specification areas may include:
+Организуй specs по capabilities и устойчивым system boundaries. Требования должны описывать observable behavior, contracts, invariants и guarantees настолько точно, чтобы change можно было проверить автоматически там, где это практично.
 
-- simulation;
-- networking;
-- entities and world model;
-- abilities and modifiers;
-- mod runtime and SDK;
-- packages and dependency model;
-- dedicated server behavior;
-- creator workflows.
-
-New specifications should be introduced through the change workflow rather than added ad hoc.
+Если требуемое поведение меняется, не редактируй current spec как незаметную замену истории. Создай OpenSpec change, опиши delta, реализуй и verify изменение, а затем archive change так, чтобы актуальный spec отражал уже поставленное поведение.

@@ -1,95 +1,95 @@
-# Product Vision
+# Видение продукта
 
-## What Open MOBA is
+## Что такое Open MOBA
 
-Open MOBA is a moddable multiplayer game platform focused on top-down competitive and cooperative games.
+Open MOBA — модифицируемая платформа для многопользовательских top-down игр с соревновательными и кооперативными режимами.
 
-The official MOBA is not the platform's privileged core. It is the first reference game built using the same public capabilities that third-party creators receive.
+Официальная MOBA не является привилегированным ядром платформы. Это первая reference game, построенная на тех же публичных возможностях, которые получают сторонние creators.
 
-The long-term goal is to make it possible to create games such as:
+Долгосрочная цель — дать возможность создавать на одной платформе, например:
 
-- classic 5v5 MOBA;
-- 3v3 and 3v3v3 variants;
-- ARAM and arena modes;
-- PvE raids and survival modes;
+- классическую MOBA 5v5;
+- варианты 3v3 и 3v3v3;
+- ARAM и arena modes;
+- PvE raids и survival modes;
 - tower defense;
 - auto-battlers;
 - RTS-like custom games;
-- other top-down multiplayer game modes.
+- другие top-down multiplayer game modes.
 
-## Product thesis
+## Продуктовая гипотеза
 
-Existing games often expose modding after the base game architecture is already fixed. Open MOBA treats moddability as a first-class architectural constraint from the beginning.
+Во многих существующих играх modding добавляется уже после того, как архитектура базовой игры сформирована. Open MOBA рассматривает moddability как архитектурное ограничение первого класса с самого начала.
 
-The platform should provide reusable low-level systems for simulation, networking, rendering integration, navigation, combat primitives, projectiles, vision, AI hooks, assets, and creator tooling while leaving gameplay policy to packages and mods.
+Платформа должна предоставлять переиспользуемые низкоуровневые системы для simulation, networking, rendering integration, navigation, combat primitives, projectiles, vision, AI hooks, assets и creator tooling, оставляя игровую политику пакетам и модам.
 
-The reference MOBA should prove that the public API is powerful enough to build a complete game without private engine hooks.
+Reference MOBA должна доказать, что публичного API достаточно для создания полноценной игры без приватных engine hooks.
 
-## Target users
+## Целевые пользователи
 
-### Players
+### Игроки
 
-Players should be able to discover and join polished official and community-created multiplayer experiences from one ecosystem.
+Игроки должны иметь возможность находить и запускать качественные официальные и community-created multiplayer experiences внутри одной экосистемы.
 
-### Creators
+### Создатели
 
-Creators should be able to start at different levels of complexity:
+Creators должны иметь несколько уровней входа по сложности:
 
-1. declarative content for simple heroes, items, abilities, and rules;
-2. scripting for custom gameplay logic;
-3. visual tooling for maps and gameplay graphs when those workflows become mature enough to justify an editor.
+1. declarative content для простых героев, предметов, способностей и правил;
+2. scripting для нестандартной gameplay logic;
+3. visual tooling для карт и gameplay graphs, когда underlying APIs станут достаточно стабильными, чтобы оправдать создание редактора.
 
-### Developers
+### Разработчики
 
-Developers should have a stable SDK, documented contracts, local and dedicated-server workflows, automated validation, versioned packages, and compatibility guarantees appropriate to the platform's maturity.
+Разработчикам нужны стабильный SDK, документированные contracts, local и dedicated-server workflows, автоматическая validation, versioned packages и compatibility guarantees, соответствующие зрелости платформы.
 
-## Creator promise
+## Обещание creators
 
-A creator should eventually be able to:
+В перспективе creator должен иметь возможность:
 
-1. install the SDK;
-2. create a game or extend an existing package;
-3. define a hero, ability, item, map, or game mode without modifying engine source;
-4. run the result locally;
-5. start a dedicated server;
-6. invite another player;
-7. package and publish the result.
+1. установить SDK;
+2. создать игру или расширить существующий package;
+3. определить героя, способность, предмет, карту или game mode без изменения engine source;
+4. запустить результат локально;
+5. поднять dedicated server;
+6. пригласить другого игрока;
+7. упаковать и опубликовать результат.
 
-This promise is the central acceptance criterion for the platform architecture.
+Это обещание является центральным acceptance criterion архитектуры платформы.
 
 ## Reference game
 
-The first official game will intentionally be small. Its purpose is to validate platform capabilities, not to compete with mature MOBAs on content volume.
+Первая официальная игра намеренно будет небольшой. Её задача — проверить возможности платформы, а не конкурировать с зрелыми MOBA по объёму контента.
 
-Early scope should favor a small playable match with a few heroes, abilities, items, creeps, structures, and victory rules over a large content roster.
+На раннем этапе приоритетом является небольшой playable match с несколькими героями, способностями, предметами, creeps, structures и victory rules, а не большой roster контента.
 
-## Development model
+## Модель разработки
 
-Open MOBA is initially developed by a single human orchestrator working with AI agents.
+На начальном этапе Open MOBA разрабатывается одним человеком-оркестратором с помощью AI-агентов.
 
-The repository must therefore be easy for agents to understand, modify, build, test, and review using text-based interfaces and automated verification.
+Поэтому repository должен быть удобен для понимания, изменения, сборки, тестирования и review агентами через текстовые интерфейсы и автоматическую verification.
 
-The project should prefer workflows where an agent can independently:
+Проект должен предпочитать workflow, в котором агент способен самостоятельно:
 
-- understand intent from versioned specifications;
-- implement a bounded change;
-- run tests and headless simulations;
-- inspect failures;
-- update the implementation;
-- produce a reviewable pull request.
+- понять intent из versioned specifications;
+- реализовать ограниченное изменение;
+- запустить тесты и headless simulations;
+- изучить failures;
+- скорректировать implementation;
+- подготовить reviewable pull request.
 
-The human remains responsible for product direction, architecture approval, scope, and final acceptance.
+Человек остаётся ответственным за product direction, approval архитектуры, scope и финальное принятие результата.
 
-## What Open MOBA is not
+## Чем Open MOBA не является
 
-Open MOBA is not:
+Open MOBA — это не:
 
-- a direct Dota 2 clone;
-- an attempt to build a custom rendering engine from scratch;
-- a promise to support every game genre;
-- a visual editor project before the underlying public APIs are proven;
-- an AI-generated codebase without explicit architectural ownership and verification.
+- прямой клон Dota 2;
+- попытка написать собственный rendering engine с нуля;
+- обещание поддерживать все игровые жанры;
+- проект визуального редактора до доказательства пригодности underlying public APIs;
+- AI-generated codebase без явного архитектурного ownership и verification.
 
-## Long-term success
+## Долгосрочный критерий успеха
 
-Open MOBA succeeds if the platform develops a healthy creator ecosystem where official and community games share the same foundations, creators can safely extend each other through reusable packages, and the platform can evolve without making every game depend on undocumented engine internals.
+Open MOBA успешна, если вокруг платформы формируется здоровая creator ecosystem, официальные и community games используют общие foundations, creators могут безопасно расширять работу друг друга через reusable packages, а платформа способна развиваться без зависимости каждой игры от undocumented engine internals.

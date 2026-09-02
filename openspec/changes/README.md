@@ -1,37 +1,21 @@
-# Proposed and In-Progress Changes
+# OpenSpec Changes
 
-This directory contains bounded changes to Open MOBA.
+Этот каталог содержит предлагаемые, активные и архивированные changes проекта.
 
-A substantial change should move through a documented lifecycle rather than going directly from an idea to implementation.
-
-The initial workflow is expected to use these artifacts:
+Для нетривиального изменения используй отдельный каталог с понятным kebab-case именем:
 
 ```text
 openspec/changes/<change-name>/
-  proposal.md
-  requirements.md
-  design.md
-  tasks.md
 ```
 
-The intended flow is:
+В стандартном `spec-driven` workflow change проходит через artifacts:
 
 ```text
-idea
-  -> proposal
-  -> human intent approval
-  -> requirements
-  -> design
-  -> human design approval
-  -> tasks
-  -> implementation
-  -> automated verification
-  -> review
-  -> human PR approval
-  -> merge
-  -> archive/update current specs
+proposal -> specs + design -> tasks -> apply -> verify -> archive
 ```
 
-Not every small bug requires the full workflow. The amount of ceremony should be proportional to architectural impact, risk, and reversibility.
+Implementation не должна начинаться до прохождения обязательных human gates, описанных в [`docs/development/workflow.md`](../../docs/development/workflow.md).
 
-The concrete OpenSpec schema and agent workflow will be defined in a later dedicated change.
+После merge и verification change архивируется, а поставленное поведение должно быть отражено в `openspec/specs/`.
+
+Этот каталог не является backlog. Идеи, которые ещё не стали конкретным change, не должны храниться здесь как псевдоспецификации.
