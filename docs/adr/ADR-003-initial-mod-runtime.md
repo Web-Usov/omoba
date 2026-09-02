@@ -1,6 +1,6 @@
 # ADR-003: Initial sandboxed mod runtime
 
-- **Status:** Proposed
+- **Status:** Accepted
 - **Date:** 2026-09-03
 
 ## Context
