@@ -1,6 +1,6 @@
 # ADR-001: Godot как client/editor shell
 
-- **Status:** Proposed
+- **Status:** Accepted
 - **Date:** 2026-09-03
 
 ## Context
