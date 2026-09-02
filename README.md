@@ -1,26 +1,26 @@
 # Open MOBA
 
-Open MOBA is a moddable multiplayer game platform where the official game is a reference implementation built on the same public APIs available to community creators.
+Open MOBA — модифицируемая платформа для многопользовательских игр, в которой официальная игра является reference implementation и создаётся на тех же публичных API, которые доступны community creators.
 
-The project is designed around three core ideas:
+Проект строится вокруг трёх ключевых идей:
 
-- **Platform first, game second** — the base MOBA validates the platform rather than bypassing it.
-- **Modding by default** — gameplay rules, heroes, abilities, items, maps, and game modes should be extensible without changing engine source.
-- **Agent-first development** — architecture, documentation, tests, and workflows are structured so development can be delegated safely to AI agents while a human remains responsible for product intent and final approval.
+- **Сначала платформа, потом игра** — базовая MOBA должна подтверждать состоятельность платформы, а не обходить её ограничения.
+- **Modding по умолчанию** — правила игры, герои, способности, предметы, карты и game modes должны расширяться без изменения исходного кода engine.
+- **Agent-first разработка** — архитектура, документация, тесты и workflow устроены так, чтобы разработку можно было безопасно делегировать AI-агентам, при этом человек сохраняет ответственность за product intent и финальное принятие результата.
 
-## Project status
+## Статус проекта
 
-Open MOBA is in the foundation phase. The current focus is establishing product vision, architectural principles, and a spec-driven development workflow before implementation begins.
+Open MOBA находится на этапе foundation. Сейчас основной фокус — зафиксировать product vision, архитектурные принципы и spec-driven workflow до начала реализации.
 
-## Documentation
+## Документация
 
-- [`docs/vision/product-vision.md`](docs/vision/product-vision.md) — product vision and long-term direction.
-- [`docs/vision/principles.md`](docs/vision/principles.md) — foundational project principles.
-- [`docs/architecture/overview.md`](docs/architecture/overview.md) — evolving architecture overview.
-- [`docs/adr/`](docs/adr/) — architecture decision records.
-- [`openspec/specs/`](openspec/specs/) — current system specifications.
-- [`openspec/changes/`](openspec/changes/) — proposed and in-progress changes.
+- [`docs/vision/product-vision.md`](docs/vision/product-vision.md) — product vision и долгосрочное направление.
+- [`docs/vision/principles.md`](docs/vision/principles.md) — фундаментальные принципы проекта.
+- [`docs/architecture/overview.md`](docs/architecture/overview.md) — развивающийся обзор архитектуры.
+- [`docs/adr/`](docs/adr/) — Architecture Decision Records.
+- [`openspec/specs/`](openspec/specs/) — актуальные спецификации системы.
+- [`openspec/changes/`](openspec/changes/) — предлагаемые и находящиеся в работе изменения.
 
-## Development model
+## Модель разработки
 
-Git is the source of truth. Durable project knowledge belongs in versioned documentation, specifications, ADRs, code, and tests rather than in chat history or a specific AI tool.
+Git является source of truth. Долговременные знания проекта должны находиться в versioned documentation, specs, ADR, коде и тестах, а не в истории чатов или состоянии конкретного AI-инструмента.

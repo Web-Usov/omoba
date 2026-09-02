@@ -1,49 +1,50 @@
 schema: spec-driven
 
 context: |
-  Open MOBA is a platform-first, moddable multiplayer game platform.
-  Git is the source of truth for product intent, specifications, architecture decisions, code, and tests.
-  The official/reference game must use the same public Mod API available to external creators.
-  Prefer machine-verifiable requirements and acceptance criteria whenever practical.
-  Preserve server authority and separation of simulation from presentation unless an accepted ADR explicitly changes those principles.
-  Before planning architecture-impacting work, read docs/vision/principles.md, docs/architecture/overview.md, relevant ADRs, and current specs.
+  Open MOBA — platform-first модифицируемая multiplayer game platform.
+  Git является source of truth для product intent, specifications, architecture decisions, code и tests.
+  Официальная/reference game должна использовать тот же публичный Mod API, который доступен внешним creators.
+  Canonical project documentation, OpenSpec artifacts и ADR ведутся на русском; filenames, code/API identifiers, CLI commands и schema keys сохраняются на английском.
+  Предпочитай machine-verifiable requirements и acceptance criteria везде, где это практично.
+  Сохраняй server authority и separation of simulation from presentation, если принятый ADR явно не меняет эти принципы.
+  Перед планированием architecture-impacting work прочитай docs/vision/principles.md, docs/architecture/overview.md, relevant ADRs и current specs.
 
 rules:
   proposal:
-    - Keep the proposal focused on why the change is needed and what outcome is required.
-    - Include explicit Scope and Non-goals.
-    - Identify affected capabilities and whether a new or updated ADR is required.
-    - Do not silently introduce new product or architecture decisions.
+    - Сосредоточь proposal на том, зачем нужен change и какой outcome требуется.
+    - Обязательно укажи Scope и Non-goals.
+    - Определи affected capabilities и необходимость нового или обновлённого ADR.
+    - Не вводи новые product или architecture decisions молча.
 
   specs:
-    - Describe observable behavior and system guarantees rather than implementation details unless the boundary itself is a requirement.
-    - Use normative language such as SHALL, MUST, SHOULD, and MUST NOT deliberately.
-    - Make scenarios concrete and testable; prefer Given/When/Then where useful.
-    - Cover relevant failure, security, concurrency, and compatibility cases for networking, modding, persistence, or public API changes.
+    - Описывай observable behavior и system guarantees, а не implementation details, если сама boundary не является requirement.
+    - Используй однозначные нормативные формулировки; при необходимости сохраняй устоявшиеся MUST, SHALL, SHOULD и MUST NOT.
+    - Делай scenarios конкретными и testable; Given/When/Then допустим там, где это повышает ясность.
+    - Для networking, modding, persistence и public API changes покрывай relevant failure, security, concurrency и compatibility cases.
 
   design:
-    - State system boundaries, invariants, interfaces, data flow, and ownership explicitly.
-    - Include alternatives considered and explain why the chosen approach is preferred.
-    - Include a verification strategy covering tests, simulations, benchmarks, or tooling as appropriate.
-    - Reference existing ADRs. If a new fundamental decision is required, mark it as ADR required instead of treating it as an implementation detail.
-    - Keep engine/platform decisions separate from reference-game rules whenever possible.
+    - Явно фиксируй system boundaries, invariants, interfaces, data flow и ownership.
+    - Указывай рассмотренные alternatives и объясняй выбор подхода.
+    - Включай verification strategy: tests, simulations, benchmarks или tooling по ситуации.
+    - Ссылайся на существующие ADR. Если требуется новое фундаментальное решение, пометь ADR required вместо маскировки решения под implementation detail.
+    - По возможности отделяй engine/platform decisions от правил reference game.
 
   tasks:
-    - Break work into small, ordered tasks that can be implemented and verified independently where practical.
-    - Each implementation task must include or be paired with appropriate verification work.
-    - Prefer tasks that one coding-agent session can complete without broad unrelated changes.
-    - Do not add work outside the approved scope simply because it is convenient during implementation.
+    - Разбивай работу на небольшие ordered tasks, которые по возможности можно реализовать и проверить независимо.
+    - Каждая implementation task должна включать или иметь парную verification work.
+    - Предпочитай tasks, которые одна coding-agent session может завершить без широких unrelated changes.
+    - Не добавляй работу за пределами approved scope только потому, что это удобно во время implementation.
 
 operations:
   apply:
     guidance:
-      - Implement the approved specification and design; do not reinterpret product intent during coding.
-      - If implementation reveals a conflict with scope, architecture invariants, current specs, or accepted ADRs, stop and update the change instead of improvising around it.
-      - Do not introduce a new fundamental architecture decision without an accepted ADR.
-      - Run the strongest available automated verification before marking a task complete.
+      - Реализуй утверждённые specification и design; не переопределяй product intent во время coding.
+      - Если implementation выявляет конфликт со scope, architecture invariants, current specs или accepted ADRs, остановись и обнови change вместо импровизации.
+      - Не вводи новое фундаментальное architecture decision без accepted ADR.
+      - Перед завершением task запускай максимально сильную доступную automated verification.
 
   archive:
     guidance:
-      - Archive only after implementation and verification are complete.
-      - Ensure shipped behavior is reflected in current specs.
-      - Record any accepted deviation from the original design before archiving.
+      - Архивируй change только после завершения implementation и verification.
+      - Убедись, что shipped behavior отражён в current specs.
+      - Зафиксируй все accepted deviations от исходного design до archive.

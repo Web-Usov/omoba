@@ -1,12 +1,12 @@
-# Architecture Overview
+# Обзор архитектуры
 
-> Status: evolving. This document intentionally describes only high-level boundaries that are consistent with the current product vision. Concrete technology choices belong in ADRs and have not yet been finalized here.
+> Статус: evolving. Этот документ намеренно описывает только высокоуровневые boundaries, совместимые с текущим product vision. Конкретные технологические решения должны фиксироваться в ADR и пока здесь не считаются принятыми.
 
-## Architectural direction
+## Архитектурное направление
 
-Open MOBA should separate platform infrastructure from game-specific policy so that the official game can be implemented using the same public extension mechanisms as community games.
+Open MOBA должна отделять platform infrastructure от game-specific policy, чтобы официальную игру можно было реализовать через те же публичные extension mechanisms, что и community games.
 
-A preliminary boundary model is:
+Предварительная модель boundaries:
 
 ```text
 Presentation / Client
@@ -27,35 +27,35 @@ Public Mod Runtime / SDK
 Games and reusable gameplay packages
 ```
 
-The exact technologies, process model, runtime boundaries, and APIs behind these blocks require explicit architectural decisions before implementation.
+Точные технологии, process model, runtime boundaries и APIs внутри этих блоков должны быть определены отдельными архитектурными решениями до начала реализации.
 
-## Desired system properties
+## Желаемые свойства системы
 
 ### Headless-first simulation
 
-Core gameplay simulation must be executable without graphical presentation. This enables dedicated servers, automated tests, long-running simulations, benchmarks, and agent-driven verification.
+Core gameplay simulation должна запускаться без графического presentation layer. Это необходимо для dedicated servers, автоматических тестов, long-running simulations, benchmarks и agent-driven verification.
 
 ### Authoritative multiplayer
 
-The server owns authoritative gameplay state and evaluates client commands. Network architecture should make trust boundaries explicit from the beginning.
+Server владеет authoritative gameplay state и обрабатывает client commands. Network architecture с самого начала должна явно определять trust boundaries.
 
-### Public gameplay capabilities
+### Публичные gameplay capabilities
 
-The official game should depend on public extension contracts rather than privileged internal APIs wherever practical.
+Официальная игра по возможности должна зависеть от публичных extension contracts, а не от privileged internal APIs.
 
-### Layered creator experience
+### Многоуровневый creator experience
 
-The platform is expected to support multiple levels of content creation over time:
+Со временем платформа должна поддерживать несколько уровней создания контента:
 
 1. declarative data;
 2. sandboxed scripting;
-3. visual authoring tools built on top of stable underlying representations.
+3. visual authoring tools, построенные поверх стабильных underlying representations.
 
 ### Reusable packages
 
-Gameplay capabilities should be composable so games can share platform and genre packages instead of copying entire implementations.
+Gameplay capabilities должны быть composable, чтобы игры могли переиспользовать platform и genre packages вместо копирования целых implementations.
 
-Possible future package families include:
+Возможные будущие package families:
 
 ```text
 @openmoba/core
@@ -67,21 +67,21 @@ Possible future package families include:
 @openmoba/rts
 ```
 
-Names and boundaries are illustrative until specified and accepted.
+Названия и boundaries являются иллюстративными, пока они не будут специфицированы и приняты.
 
-## Decisions intentionally not made here
+## Решения, которые намеренно не принимаются этим документом
 
-This overview does not yet decide:
+Этот overview пока не определяет:
 
 - game engine;
-- primary implementation language;
-- ECS versus another world model;
-- mod scripting language or runtime;
+- основной implementation language;
+- ECS или альтернативную world model;
+- язык или runtime для mod scripting;
 - network transport;
 - replication strategy;
 - simulation tick rate;
 - package manifest format;
 - editor technology;
-- persistence and backend services.
+- persistence и backend services.
 
-Each consequential choice should be evaluated through the project's spec-driven workflow and recorded in an ADR where appropriate.
+Каждое существенное решение должно проходить через spec-driven workflow проекта и фиксироваться в ADR, когда это уместно.

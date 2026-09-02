@@ -1,31 +1,31 @@
 # Architecture Decision Records
 
-Architecture Decision Records (ADRs) capture consequential technical decisions that are expensive, cross-cutting, security-sensitive, or difficult to reverse.
+Architecture Decision Records (ADR) фиксируют существенные технические решения, которые являются дорогими, cross-cutting, security-sensitive или труднообратимыми.
 
-An ADR should explain:
+ADR должен объяснять:
 
-- the context and problem;
-- the decision;
-- alternatives considered;
-- consequences and trade-offs;
-- the status of the decision.
+- context и проблему;
+- принятое решение;
+- рассмотренные alternatives;
+- consequences и trade-offs;
+- статус решения.
 
-ADRs are not implementation journals. Small local choices belong in code, tests, or change design documents.
+ADR — не implementation journal. Небольшие локальные решения должны оставаться в коде, тестах или design-документах конкретного change.
 
-## Status values
+## Статусы
 
-Use one of:
+Используются значения:
 
 - `Proposed`
 - `Accepted`
 - `Superseded`
 - `Deprecated`
 
-## Naming
+## Именование
 
 ```text
 ADR-001-short-decision-title.md
 ADR-002-another-decision.md
 ```
 
-Technology choices discussed before an ADR is accepted are not considered final project architecture.
+Технологические варианты, обсуждавшиеся до принятия ADR, не считаются финальной архитектурой проекта.

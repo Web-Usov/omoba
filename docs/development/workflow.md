@@ -1,55 +1,77 @@
-# Development Workflow
+# Процесс разработки
 
-Open MOBA is developed docs-first and agent-first. The human owner defines intent, constraints, and acceptance. Agents plan, implement, verify, and review within those boundaries.
+Open MOBA разрабатывается docs-first и agent-first. Human owner определяет intent, ограничения и acceptance. Agents планируют, реализуют, проверяют и review'ят работу внутри этих границ.
 
-## Roles
+## Роли
 
 ### Human owner
 
-Owns:
+Отвечает за:
 
 - product intent;
-- priorities and scope;
-- acceptance of architecture decisions;
-- approval of high-impact designs;
-- final PR acceptance.
+- priorities и scope;
+- принятие архитектурных решений;
+- approval high-impact designs;
+- финальное принятие PR.
 
-The human owner should not need to manually supervise routine implementation details when those details are already constrained by accepted specs, ADRs, interfaces, and tests.
+Human owner не должен вручную контролировать routine implementation details, если они уже ограничены принятыми specs, ADR, interfaces и tests.
 
 ### Execution agent
 
-Owns:
+Отвечает за:
 
-- reading the relevant source of truth before coding;
-- implementation within approved scope;
-- tests and other verification required by the change;
-- updating task status and implementation notes;
-- surfacing conflicts instead of inventing new product intent.
+- чтение relevant source of truth до начала coding;
+- implementation внутри утверждённого scope;
+- tests и другую verification, требуемую change;
+- обновление task status и implementation notes;
+- выявление конфликтов вместо самостоятельного изменения product intent.
 
 ### Review agent
 
-Should be independent from the execution pass when practical. It checks:
+По возможности должен быть независим от execution pass. Он проверяет:
 
-- implementation versus the approved spec and design;
-- architectural boundary violations;
-- missing tests and edge cases;
+- implementation относительно утверждённых spec и design;
+- нарушения architecture boundaries;
+- отсутствующие tests и edge cases;
 - scope creep;
-- regressions and unsafe assumptions.
+- regressions и unsafe assumptions.
 
-The review agent does not replace human merge approval.
+Review agent не заменяет human merge approval.
 
-## Source-of-truth hierarchy
+## Иерархия source of truth
 
-When guidance conflicts, use this order:
+При конфликте инструкций действует следующий порядок:
 
-1. accepted product principles and vision;
-2. accepted ADRs;
-3. current OpenSpec specifications;
-4. approved active-change specs/design;
-5. code and tests;
-6. issues, PR discussion, and agent-session context.
+1. принятые product principles и vision;
+2. принятые ADR;
+3. актуальные OpenSpec specifications;
+4. утверждённые specs/design активного change;
+5. code и tests;
+6. issues, PR discussion и context agent session.
 
-A lower layer must not silently override a higher layer. Resolve the conflict explicitly.
+Нижний уровень не имеет права молча переопределять верхний. Конфликт должен быть разрешён явно.
+
+## Язык проекта
+
+Canonical project documentation ведётся на русском языке.
+
+На русском пишутся:
+
+- product и architecture docs;
+- OpenSpec proposals, specs, designs и tasks;
+- ADR;
+- существенные пояснения в PR, когда они являются частью долговременного контекста проекта.
+
+На английском сохраняются:
+
+- filenames и paths;
+- code identifiers, type/class/function names;
+- API и protocol identifiers;
+- CLI commands;
+- schema keys, enums и status values;
+- устоявшиеся технические термины, если перевод снижает точность или читаемость.
+
+Публичная англоязычная документация для внешних contributors может быть добавлена позже как отдельный слой. Она не должна становиться вторым независимым source of truth.
 
 ## Standard change flow
 
@@ -94,103 +116,105 @@ proposal
           archive
 ```
 
-## Gate policy
+Названия OpenSpec artifacts и операций в diagram сохраняются на английском, поскольку это identifiers workflow.
+
+## Политика gates
 
 ### Intent Gate
 
-Mandatory when the change modifies behavior, capability scope, a public contract, architecture, networking, security, persistence, compatibility, or modding boundaries.
+Обязателен, когда change изменяет behavior, capability scope, public contract, architecture, networking, security, persistence, compatibility или modding boundaries.
 
-Approval means the owner accepts:
+Approval означает, что owner согласен с:
 
-- the problem statement;
+- problem statement;
 - scope;
 - non-goals;
 - affected capabilities;
-- expected outcome.
+- ожидаемым outcome.
 
 ### Design Gate
 
-Mandatory for architecture-impacting changes and any change that creates or modifies a fundamental technical decision.
+Обязателен для architecture-impacting changes и любых изменений, создающих или изменяющих фундаментальное техническое решение.
 
-Approval means the owner accepts:
+Approval означает согласие owner с:
 
-- boundaries and ownership;
-- interfaces and data flow;
+- boundaries и ownership;
+- interfaces и data flow;
 - invariants;
-- major trade-offs;
+- основными trade-offs;
 - verification strategy;
-- required ADRs.
+- необходимыми ADR.
 
 ### Merge Gate
 
-Mandatory for non-trivial PRs.
+Обязателен для всех non-trivial PR.
 
-The PR should present enough evidence for an owner to decide without replaying the entire agent session.
+PR должен содержать достаточно evidence, чтобы owner мог принять решение без воспроизведения всей agent session.
 
-## PR evidence
+## Evidence в PR
 
-A substantial PR should include:
+Существенный PR должен содержать:
 
-- linked OpenSpec change;
-- concise summary of delivered behavior;
+- ссылку на OpenSpec change;
+- краткое описание delivered behavior;
 - verification commands/results;
-- tests or benchmarks added/changed;
-- architecture/ADR impact;
-- deviations from the approved design, if any;
-- known limitations or follow-up work.
+- добавленные или изменённые tests/benchmarks;
+- влияние на architecture/ADR;
+- deviations от утверждённого design, если они есть;
+- known limitations и follow-up work.
 
 ## Fast lane
 
-A full OpenSpec change may be skipped only when the work is clearly low-risk and does not introduce or alter behavior, architecture, or public contracts.
+Полный OpenSpec change можно пропустить только для явно low-risk работы, которая не меняет behavior, architecture или public contracts.
 
-Typical fast-lane work:
+Типичные fast-lane задачи:
 
-- typo and formatting fixes;
-- mechanical code cleanup with unchanged behavior;
-- documentation corrections that do not redefine requirements;
-- a narrow bug fix whose expected behavior is already covered by a current spec and regression test.
+- исправление опечаток и formatting;
+- mechanical code cleanup без изменения behavior;
+- исправления documentation, не переопределяющие requirements;
+- узкий bug fix, ожидаемое поведение которого уже покрыто текущим spec и regression test.
 
-If the implementation needs a new requirement, new architectural assumption, new public behavior, or broader scope, leave the fast lane and create an OpenSpec change.
+Если implementation требует нового requirement, новой архитектурной assumption, нового public behavior или расширения scope, необходимо выйти из fast lane и создать OpenSpec change.
 
-## Agent delegation unit
+## Единица делегирования агенту
 
-Tasks should be written so an execution agent can receive one bounded responsibility and independently prove completion.
+Task должна быть сформулирована так, чтобы execution agent получил одну ограниченную ответственность и мог самостоятельно доказать её завершение.
 
-A good task has:
+Хорошая task содержит:
 
-- one clear outcome;
-- explicit files/components or boundaries when known;
-- relevant spec/design references;
+- один ясный outcome;
+- явные files/components или boundaries, если они известны;
+- ссылки на relevant spec/design;
 - acceptance criteria;
-- verification command(s) or expected evidence;
-- explicit non-goals when scope expansion is tempting.
+- verification command(s) или ожидаемое evidence;
+- explicit non-goals, если есть риск scope expansion.
 
-Avoid vague tasks such as `make networking better` or `finish combat`. Prefer bounded tasks such as `implement fixed-tick SimulationClock with 30 Hz default and tests covering 300 ticks = 10 simulated seconds`.
+Следует избегать расплывчатых задач вроде `make networking better` или `finish combat`. Предпочтительны ограниченные формулировки вроде `implement fixed-tick SimulationClock with 30 Hz default and tests covering 300 ticks = 10 simulated seconds`.
 
-## Stop conditions for agents
+## Stop conditions для агентов
 
-An agent must stop and surface the conflict when:
+Agent обязан остановиться и вынести конфликт на обсуждение, если:
 
-- a task contradicts an accepted spec or ADR;
-- the requested result requires expanding approved scope;
-- a new fundamental architecture decision is required;
-- verification cannot be made reliable with the current design;
-- security or compatibility implications were not covered by the plan;
-- implementation would require changing product intent.
+- task противоречит принятому spec или ADR;
+- требуемый результат расширяет утверждённый scope;
+- необходимо новое фундаментальное архитектурное решение;
+- текущий design не позволяет сделать verification надёжной;
+- security или compatibility implications не были учтены в плане;
+- implementation требует изменения product intent.
 
-Stopping in these cases is correct behavior, not task failure.
+Остановка в таких случаях — корректное поведение, а не failure задачи.
 
-## Documentation discipline
+## Дисциплина документации
 
-Do not create process artifacts that have no durable value. Avoid meeting notes, implementation diaries, agent-thought logs, and status reports as repository documentation.
+Не следует создавать process artifacts без долговременной ценности. В repository не нужны meeting notes, implementation diaries, agent-thought logs и status reports.
 
-Durable information belongs in one of:
+Долговременная информация должна находиться в одном из мест:
 
 - product/architecture docs;
-- ADRs;
+- ADR;
 - OpenSpec specs/changes;
 - code/tests/tooling.
 
-## Evolution of this workflow
+## Развитие workflow
 
-This workflow is deliberately minimal. Add orchestration layers, custom OpenSpec schemas, agent roles, dashboards, or project-management tools only after a concrete coordination problem appears and the benefit can be demonstrated.
+Этот workflow намеренно минимален. Orchestration layers, custom OpenSpec schemas, дополнительные agent roles, dashboards и project-management tools следует добавлять только после появления конкретной coordination problem и доказанной пользы от её решения.
