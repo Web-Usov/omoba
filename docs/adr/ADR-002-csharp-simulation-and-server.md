@@ -1,6 +1,6 @@
 # ADR-002: C#/.NET simulation и standalone server
 
-- **Status:** Proposed
+- **Status:** Accepted
 - **Date:** 2026-09-03
 
 ## Context
