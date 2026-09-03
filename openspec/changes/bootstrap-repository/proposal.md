@@ -1,33 +1,33 @@
 # Proposal: bootstrap repository Open MOBA
 
-## Why
+- **Status:** Accepted
+- **Intent Gate:** approved
+- **Date:** 2026-09-03
 
-### Problem
+## Problem
 
 Open MOBA уже имеет принятые product principles, foundation ADR и current OpenSpec specs, которые определяют основные runtime boundaries: Godot .NET как presentation/client/editor shell, plain C#/.NET authoritative simulation без Godot dependency, standalone dedicated server и machine-verifiable headless workflow.
 
 При этом repository пока почти полностью состоит из документации. Принятые boundaries ещё не материализованы в собираемую структуру проектов, поэтому невозможно проверить две важные гипотезы одновременно:
 
-1. foundation architecture действительно реализуема без скрытой связности между client, simulation и server;
-2. новый execution agent без истории чата способен по repository source of truth самостоятельно собрать, проверить и подготовить ограниченный implementation PR.
+1. что foundation architecture действительно реализуема без скрытой связности между client, simulation и server;
+2. что новый execution agent, не имеющий истории чата, способен по repository source of truth самостоятельно собрать, проверить и подготовить ограниченный implementation PR.
 
 Без минимального code skeleton следующий этап `Simulation Foundation` начнёт одновременно решать repository layout, toolchain, project references и собственно simulation architecture, что увеличит scope и риск случайных решений.
 
-### Goal
+## Goal
 
 Создать минимальный собираемый repository skeleton, который материализует уже принятые foundation boundaries и предоставляет воспроизводимый CLI/CI verification contract для последующих OpenSpec changes и execution agents.
 
 Bootstrap должен доказать структуру и зависимости, но не реализовывать gameplay/platform subsystems раньше их собственных design changes.
 
-### Why now
+## Why now
 
 Roadmap определяет `Repository Bootstrap` как следующий outcome после завершённых `Foundation Governance` и `Foundation Architecture`.
 
 Этот change нужен до `Simulation Foundation`, потому что следующие agents должны работать уже внутри устойчивой solution/project structure и получать объективный feedback от build/tests/headless checks, а не проектировать эти основы заново в каждой задаче.
 
-## What Changes
-
-### Scope
+## Scope
 
 В рамках change необходимо:
 
@@ -44,7 +44,7 @@ Roadmap определяет `Repository Bootstrap` как следующий ou
 
 Точный layout каталогов, project references, architecture-test mechanism, smoke command contract и Godot CI setup должны быть определены в `design.md` после Intent Gate.
 
-### Expected repository boundaries
+## Expected repository boundaries
 
 Bootstrap должен материализовать уже принятое направление, не расширяя его:
 
@@ -69,7 +69,7 @@ OpenMoba.Cli
 
 Это conceptual boundary для Intent Gate. Конкретные project references утверждаются на Design Gate.
 
-### Acceptance outcome
+## Acceptance outcome
 
 После implementation fresh execution agent или CI runner должен иметь возможность из clean checkout доказать минимум следующее:
 
@@ -83,7 +83,7 @@ OpenMoba.Cli
 8. CI выполняет соответствующие checks автоматически и сохраняет существующую OpenSpec validation.
 9. Локальные verification commands и required toolchain описаны достаточно, чтобы новый agent мог воспроизвести CI contract без истории чата.
 
-### Non-goals
+## Non-goals
 
 Этот change намеренно НЕ выбирает и НЕ реализует:
 
@@ -105,7 +105,7 @@ OpenMoba.Cli
 
 Если для bootstrap оказывается необходимо принять одно из этих решений, implementation должна остановиться и change должен быть перепланирован через соответствующий Design/ADR process.
 
-### Constraints
+## Constraints
 
 Implementation обязана сохранять current specs и Accepted ADR:
 
@@ -128,19 +128,11 @@ Accepted foundation baseline для design:
 
 Если текущая toolchain compatibility требует отступления от Accepted baseline, это считается blocker и требует явного design/ADR review, а не скрытой корректировки implementation.
 
-## Capabilities
+## Affected current capabilities
 
-### New Capabilities
+Этот change в первую очередь реализует уже существующие requirements и не должен придумывать им новый смысл.
 
-Нет. Bootstrap не вводит новый spec-level behavior.
-
-### Modified Capabilities
-
-Нет. Requirements существующих capabilities не меняются; change реализует уже принятые guarantees. Поэтому change помечен `skip_specs: true`, а фиктивные delta specs не создаются.
-
-### Current capabilities exercised by implementation
-
-Будущая implementation должна материализовать и проверить существующие:
+Затрагиваются current capabilities:
 
 - `foundation-runtime`;
 - `simulation-hosting`;
@@ -150,7 +142,11 @@ Accepted foundation baseline для design:
 
 `mod-runtime` остаётся отдельной будущей implementation capability: bootstrap может создать structural boundary/project, но не считается реализацией scripting sandbox, execution budgeting или interpreter integration.
 
-Если Design этап обнаружит действительно отсутствующий durable requirement, `skip_specs` должен быть удалён, а минимальный delta spec — добавлен до Design Gate с явным owner review.
+## Spec delta expectation
+
+На Intent Gate **новый behavioral spec delta не предполагается**: требования bootstrap уже выражены current foundation specs и roadmap outcome.
+
+После Intent Gate design обязан проверить это предположение. Если для корректной реализации обнаружится отсутствующий durable requirement, до Design Gate необходимо добавить минимальный delta spec и явно показать owner, какое новое требование предлагается. Нельзя превращать implementation detail в новый implicit contract.
 
 ## Design questions after Intent Gate
 
@@ -191,8 +187,6 @@ read AGENTS.md + relevant vision/ADR/spec/change
 
 Первый bootstrap PR одновременно является проверкой качества architecture и проверкой agent-first development model.
 
-## Impact
-
-Change затронет будущую physical repository structure, build/test toolchain, CI и Godot client shell, но не меняет current behavioral specs, Accepted ADR или product behavior.
+## Expected outcome
 
 После merge `Repository Bootstrap` считается завершённым, когда repository имеет минимальную физическую структуру и CI contract, достаточные для следующего отдельного change `Simulation Foundation` без повторного выбора foundation stack или repository architecture.
