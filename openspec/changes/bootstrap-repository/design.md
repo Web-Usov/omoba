@@ -1,7 +1,7 @@
 # Design: bootstrap repository Open MOBA
 
-- **Status:** Proposed
-- **Gate:** Requires Design Gate
+- **Status:** Accepted
+- **Gate:** Design Gate approved
 - **Date:** 2026-09-03
 
 ## 1. Цель design
