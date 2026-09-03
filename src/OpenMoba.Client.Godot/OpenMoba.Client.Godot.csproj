@@ -1,0 +1,13 @@
+<Project Sdk="Godot.NET.Sdk/4.7.2">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <EnableDynamicLoading>true</EnableDynamicLoading>
+    <RootNamespace>OpenMoba.Client.Godot</RootNamespace>
+    <!-- Godot.NET.Sdk manages its own package graph; keep CPM from interfering. -->
+    <ManagePackageVersionsCentrally>false</ManagePackageVersionsCentrally>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\OpenMoba.Contracts\OpenMoba.Contracts.csproj" />
+  </ItemGroup>
+</Project>
