@@ -1,13 +1,17 @@
-﻿using OpenMoba.Sim;
+﻿using System.Reflection;
 
 if (args is ["--smoke"])
 {
     try
     {
-        var composition = BootstrapHost.Create();
-        if (string.IsNullOrWhiteSpace(composition.ComponentName))
+        var simAssembly = Assembly.Load("OpenMoba.Sim");
+        var bootstrapMarker = simAssembly
+            .GetCustomAttributes<AssemblyMetadataAttribute>()
+            .FirstOrDefault(attribute => attribute.Key == "OpenMoba.Bootstrap");
+
+        if (simAssembly.GetName().Name != "OpenMoba.Sim" || bootstrapMarker?.Value != "Sim")
         {
-            Console.Error.WriteLine("Smoke composition failed: empty component name.");
+            Console.Error.WriteLine("Smoke composition failed: OpenMoba.Sim assembly metadata was not loaded.");
             return 1;
         }
 
