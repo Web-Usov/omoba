@@ -29,11 +29,11 @@ Exit criteria:
 - initial scripting adapter заменяем и sandboxed;
 - ECS/world model, transport, replication, tick rate и gameplay architecture остаются deferred до отдельных changes.
 
-## 2. Repository Bootstrap — Next
+## 2. Repository Bootstrap — Done
 
-**Цель:** превратить принятые boundaries в минимальный собираемый repository skeleton.
+**Доказано:** принятые foundation boundaries материализованы в минимальный собираемый repository skeleton.
 
-Должно быть доказано из CLI/CI:
+Exit criteria:
 
 - существуют shared contracts, simulation library, standalone server/CLI и Godot client shell;
 - `OpenMoba.Sim` build/test проходит без Godot;
@@ -42,9 +42,9 @@ Exit criteria:
 - Godot project загружается headless;
 - clean checkout можно проверить без ручных editor rituals.
 
-Не входит в этот этап: выбор ECS, окончательной world model, network transport, replication, tick rate, rollback, gameplay systems или финальной Mod API surface.
+На этом этапе намеренно не выбирались ECS, окончательная world model, network transport, replication, tick rate, rollback, gameplay systems или финальная Mod API surface.
 
-## 3. Simulation Foundation — Planned
+## 3. Simulation Foundation — Next
 
 **Цель:** определить и реализовать минимальную engine-neutral модель authoritative simulation.
 
