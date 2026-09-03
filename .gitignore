@@ -17,3 +17,6 @@ Thumbs.db
 .dotnet/
 .tools/
 *.nupkg
+
+# Godot generated import cache leftovers
+*.import
