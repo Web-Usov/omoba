@@ -91,8 +91,15 @@ jobs:
           "$GODOT_BIN" --version
 
       - name: Build Godot client
-        run: dotnet build src/OpenMoba.Client.Godot/OpenMoba.Client.Godot.csproj --configuration Release
+        run: |
+          # Editor/headless project load resolves the Debug assembly path by default.
+          dotnet build src/OpenMoba.Client.Godot/OpenMoba.Client.Godot.csproj --configuration Debug
+          dotnet build src/OpenMoba.Client.Godot/OpenMoba.Client.Godot.csproj --configuration Release
 
       - name: Run Godot headless smoke
         run: |
-          "$GODOT_BIN" --headless --path src/OpenMoba.Client.Godot
+          set -euo pipefail
+          # --quit-after bounds first-checkout import/runtime so CI cannot hang forever.
+          timeout 90s "$GODOT_BIN" --headless --path src/OpenMoba.Client.Godot --quit-after 300 \
+            | tee "$RUNNER_TEMP/godot-smoke.log"
+          grep -F '{"component":"OpenMoba.Client.Godot","mode":"smoke","status":"ok"}' "$RUNNER_TEMP/godot-smoke.log"

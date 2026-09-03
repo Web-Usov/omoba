@@ -13,7 +13,6 @@ config_version=5
 config/name="Open MOBA Client"
 run/main_scene="res://Scenes/Bootstrap.tscn"
 config/features=PackedStringArray("4.7", "C#")
-config/icon="res://icon.svg"
 
 [dotnet]
 

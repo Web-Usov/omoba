@@ -29,11 +29,14 @@ dotnet run --project src/OpenMoba.Server --configuration Release -- --smoke
 ## Client smoke (требует pinned Godot 4.7.2 .NET)
 
 ```bash
+dotnet build src/OpenMoba.Client.Godot/OpenMoba.Client.Godot.csproj --configuration Debug
 dotnet build src/OpenMoba.Client.Godot/OpenMoba.Client.Godot.csproj --configuration Release
 godot --headless --path src/OpenMoba.Client.Godot
 ```
 
 Используйте именно .NET/Mono Godot binary версии 4.7.2. Имя executable может отличаться по OS; важно совпадение версии и Mono/.NET edition.
+
+Editor/headless path по умолчанию ожидает Debug assembly, поэтому Debug build обязателен для smoke. В CI дополнительно используется `--quit-after` как upper bound на clean-checkout import/runtime, а success проверяется по machine-readable marker в stdout.
 
 ## CI equivalence
 

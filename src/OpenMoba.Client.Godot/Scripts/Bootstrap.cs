@@ -14,6 +14,11 @@ public partial class Bootstrap : Node
         _ = SharedContractBootstrap.AssemblyName;
 
         GD.Print("""{"component":"OpenMoba.Client.Godot","mode":"smoke","status":"ok"}""");
+        CallDeferred(nameof(ExitSmoke));
+    }
+
+    private void ExitSmoke()
+    {
         GetTree().Quit(0);
     }
 }
