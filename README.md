@@ -10,12 +10,13 @@ Open MOBA — модифицируемая платформа для много�
 
 ## Статус проекта
 
-Open MOBA находится на этапе foundation. Сейчас основной фокус — зафиксировать product vision, архитектурные принципы и spec-driven workflow до начала реализации.
+Foundation governance и foundation architecture зафиксированы, OpenSpec lifecycle проверяется CI. Следующий этап — `Repository Bootstrap`: минимальный собираемый skeleton из shared .NET contracts/simulation/server/CLI и Godot client shell с headless verification.
 
 ## Документация
 
 - [`docs/vision/product-vision.md`](docs/vision/product-vision.md) — product vision и долгосрочное направление.
 - [`docs/vision/principles.md`](docs/vision/principles.md) — фундаментальные принципы проекта.
+- [`docs/vision/roadmap.md`](docs/vision/roadmap.md) — outcome-based roadmap и последовательность платформенных доказательств.
 - [`docs/architecture/overview.md`](docs/architecture/overview.md) — развивающийся обзор архитектуры.
 - [`docs/adr/`](docs/adr/) — Architecture Decision Records.
 - [`openspec/specs/`](openspec/specs/) — актуальные спецификации системы.
