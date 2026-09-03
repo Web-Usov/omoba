@@ -140,11 +140,11 @@ godot --headless --path src/OpenMoba.Client.Godot
 ## 9. Final verification и PR evidence
 
 - [x] Запустить все применимые canonical checks локально/в harness environment.
-- [ ] Дождаться successful GitHub CI для `Spec Integrity` и нового code workflow.
+- [x] Дождаться successful GitHub CI для `Spec Integrity` и нового code workflow.
 - [x] Обновить этот `tasks.md`, отметив реально завершённые tasks.
-- [ ] В PR body добавить delivered structure, verification results, tests, known limitations и deviations (если были).
+- [x] В PR body добавить delivered structure, verification results, tests, known limitations и deviations (если были).
 - [x] Выполнить self-review на scope creep.
-- [ ] Передать PR независимому review-agent; не merge'ить самостоятельно.
+- [x] Передать PR независимому review-agent; не merge'ить самостоятельно.
 
 ## Stop conditions
 
