@@ -8,10 +8,10 @@
 
 ## 1. Preflight и toolchain
 
-- [ ] Прочитать `AGENTS.md`, `docs/vision/principles.md`, `docs/architecture/overview.md`, ADR-001..003, relevant current specs и весь `openspec/changes/bootstrap-repository/` до изменения кода.
-- [ ] Добавить root `global.json` с .NET SDK `10.0.400`, `rollForward: latestPatch`, `allowPrerelease: false`.
-- [ ] Добавить `Directory.Build.props`, `Directory.Packages.props` и `.editorconfig` только с нейтральными compiler/package defaults; не добавлять runtime framework/dependencies «на будущее».
-- [ ] Создать один root solution `OpenMoba.sln`.
+- [x] Прочитать `AGENTS.md`, `docs/vision/principles.md`, `docs/architecture/overview.md`, ADR-001..003, relevant current specs и весь `openspec/changes/bootstrap-repository/` до изменения кода.
+- [x] Добавить root `global.json` с .NET SDK `10.0.400`, `rollForward: latestPatch`, `allowPrerelease: false`.
+- [x] Добавить `Directory.Build.props`, `Directory.Packages.props` и `.editorconfig` только с нейтральными compiler/package defaults; не добавлять runtime framework/dependencies «на будущее».
+- [x] Создать один root solution `OpenMoba.sln`.
 
 Verification:
 
@@ -22,13 +22,13 @@ dotnet restore OpenMoba.sln
 
 ## 2. Foundation project skeleton
 
-- [ ] Создать `src/OpenMoba.Contracts` с target `net8.0` и без Godot dependencies.
-- [ ] Создать `src/OpenMoba.ModApi.Contracts` с target `net8.0`; не добавлять public gameplay/mod types без утверждённого requirement.
-- [ ] Создать `src/OpenMoba.Sim` с target `net8.0` и reference только на необходимые engine-neutral shared projects; bootstrap baseline — `OpenMoba.Contracts`.
-- [ ] Создать `src/OpenMoba.Server` как standalone `net10.0` executable с reference на `OpenMoba.Sim`.
-- [ ] Создать `src/OpenMoba.Cli` как минимальный standalone `net10.0` executable без stable command surface.
-- [ ] Добавить все production projects в `OpenMoba.sln`.
-- [ ] Не создавать `OpenMoba.ModRuntime` в этом change.
+- [x] Создать `src/OpenMoba.Contracts` с target `net8.0` и без Godot dependencies.
+- [x] Создать `src/OpenMoba.ModApi.Contracts` с target `net8.0`; не добавлять public gameplay/mod types без утверждённого requirement.
+- [x] Создать `src/OpenMoba.Sim` с target `net8.0` и reference только на необходимые engine-neutral shared projects; bootstrap baseline — `OpenMoba.Contracts`.
+- [x] Создать `src/OpenMoba.Server` как standalone `net10.0` executable с reference на `OpenMoba.Sim`.
+- [x] Создать `src/OpenMoba.Cli` как минимальный standalone `net10.0` executable без stable command surface.
+- [x] Добавить все production projects в `OpenMoba.sln`.
+- [x] Не создавать `OpenMoba.ModRuntime` в этом change.
 
 Verification:
 
@@ -44,10 +44,10 @@ Acceptance:
 
 ## 3. Standalone server smoke
 
-- [ ] Реализовать bootstrap-only mode `--smoke` в `OpenMoba.Server`.
-- [ ] Smoke path должен создать минимальную composition, доказывающую dependency на `OpenMoba.Sim`, но не создавать sockets, match/world/tick loop или gameplay state.
-- [ ] При success вывести одну machine-readable record, например `{"component":"OpenMoba.Server","mode":"smoke","status":"ok"}`, и завершиться code `0`.
-- [ ] Failure path должен завершаться non-zero code.
+- [x] Реализовать bootstrap-only mode `--smoke` в `OpenMoba.Server`.
+- [x] Smoke path должен создать минимальную composition, доказывающую dependency на `OpenMoba.Sim`, но не создавать sockets, match/world/tick loop или gameplay state.
+- [x] При success вывести одну machine-readable record, например `{"component":"OpenMoba.Server","mode":"smoke","status":"ok"}`, и завершиться code `0`.
+- [x] Failure path должен завершаться non-zero code.
 
 Verification:
 
@@ -57,13 +57,13 @@ dotnet run --project src/OpenMoba.Server --configuration Release -- --smoke
 
 ## 4. Godot .NET client shell
 
-- [ ] Создать `src/OpenMoba.Client.Godot` на exact `Godot.NET.Sdk/4.7.2`, target `net8.0`.
-- [ ] Добавить `ProjectReference` на `OpenMoba.Contracts`.
-- [ ] Не добавлять reference на `OpenMoba.Sim`.
-- [ ] Создать минимальный `project.godot`, `Scenes/Bootstrap.tscn` и `Scripts/Bootstrap.cs`.
-- [ ] Main scene должна только доказать project/C# assembly/shared-contract load, вывести machine-readable bootstrap marker и завершить process через `GetTree().Quit(0)`.
-- [ ] Не добавлять gameplay state, camera/game controls, networking или editor tooling.
-- [ ] Добавить client project в `OpenMoba.sln`.
+- [x] Создать `src/OpenMoba.Client.Godot` на exact `Godot.NET.Sdk/4.7.2`, target `net8.0`.
+- [x] Добавить `ProjectReference` на `OpenMoba.Contracts`.
+- [x] Не добавлять reference на `OpenMoba.Sim`.
+- [x] Создать минимальный `project.godot`, `Scenes/Bootstrap.tscn` и `Scripts/Bootstrap.cs`.
+- [x] Main scene должна только доказать project/C# assembly/shared-contract load, вывести machine-readable bootstrap marker и завершить process через `GetTree().Quit(0)`.
+- [x] Не добавлять gameplay state, camera/game controls, networking или editor tooling.
+- [x] Добавить client project в `OpenMoba.sln`.
 
 Verification:
 
@@ -76,24 +76,24 @@ godot --headless --path src/OpenMoba.Client.Godot
 
 ## 5. Automated architecture boundaries
 
-- [ ] Создать `tests/OpenMoba.ArchitectureTests` с target `net10.0`.
-- [ ] Проверять `.csproj` dependency graph напрямую, без third-party architecture framework.
-- [ ] Добавить assertions минимум для:
-  - [ ] `OpenMoba.Sim` target = `net8.0`;
-  - [ ] `OpenMoba.Sim` не reference client/server projects;
-  - [ ] transitive graph из `OpenMoba.Sim` не содержит `Godot.NET.Sdk`, Godot package/reference или Godot client project;
-  - [ ] `OpenMoba.Client.Godot` reference `OpenMoba.Contracts`;
-  - [ ] `OpenMoba.Client.Godot` не reference `OpenMoba.Sim`;
-  - [ ] `OpenMoba.Server` reference `OpenMoba.Sim`;
-  - [ ] shared TFMs соответствуют Accepted design.
-- [ ] Проверить, что test действительно fail'ится при искусственном запрещённом `Sim -> Godot/client` reference, затем вернуть repository в корректное состояние.
+- [x] Создать `tests/OpenMoba.ArchitectureTests` с target `net10.0`.
+- [x] Проверять `.csproj` dependency graph напрямую, без third-party architecture framework.
+- [x] Добавить assertions минимум для:
+  - [x] `OpenMoba.Sim` target = `net8.0`;
+  - [x] `OpenMoba.Sim` не reference client/server projects;
+  - [x] transitive graph из `OpenMoba.Sim` не содержит `Godot.NET.Sdk`, Godot package/reference или Godot client project;
+  - [x] `OpenMoba.Client.Godot` reference `OpenMoba.Contracts`;
+  - [x] `OpenMoba.Client.Godot` не reference `OpenMoba.Sim`;
+  - [x] `OpenMoba.Server` reference `OpenMoba.Sim`;
+  - [x] shared TFMs соответствуют Accepted design.
+- [x] Проверить, что test действительно fail'ится при искусственном запрещённом `Sim -> Godot/client` reference, затем вернуть repository в корректное состояние.
 
 ## 6. Simulation test boundary
 
-- [ ] Создать `tests/OpenMoba.Sim.Tests` с target `net10.0`.
-- [ ] Добавлять только structural/bootstrap test; не изобретать world/entity/tick/gameplay behavior ради наполнения test project.
-- [ ] Pin exact versions test-only packages в `Directory.Packages.props`.
-- [ ] Добавить оба test projects в `OpenMoba.sln`.
+- [x] Создать `tests/OpenMoba.Sim.Tests` с target `net10.0`.
+- [x] Добавлять только structural/bootstrap test; не изобретать world/entity/tick/gameplay behavior ради наполнения test project.
+- [x] Pin exact versions test-only packages в `Directory.Packages.props`.
+- [x] Добавить оба test projects в `OpenMoba.sln`.
 
 Verification:
 
@@ -105,20 +105,20 @@ dotnet test OpenMoba.sln --configuration Release
 
 ## 7. Code CI
 
-- [ ] Сохранить существующий `Spec Integrity` workflow без ослабления.
-- [ ] Добавить отдельный `.github/workflows/build.yml` для code verification на PR и push в `main`.
-- [ ] Core job должен на clean Ubuntu runner выполнять restore, Release build, отдельный `OpenMoba.Sim` build, automated tests и server smoke.
-- [ ] Godot job должен скачать официальный `Godot_v4.7.2-stable_mono_linux_x86_64.zip` из `godotengine/godot-builds`.
-- [ ] Проверить archive через официальный `SHA512-SUMS.txt` до extraction/execution.
-- [ ] Не использовать third-party setup-godot action в bootstrap.
-- [ ] Не коммитить Godot binary/export templates в repository.
-- [ ] Export templates не устанавливать: acceptance — headless project load, не export.
+- [x] Сохранить существующий `Spec Integrity` workflow без ослабления.
+- [x] Добавить отдельный `.github/workflows/build.yml` для code verification на PR и push в `main`.
+- [x] Core job должен на clean Ubuntu runner выполнять restore, Release build, отдельный `OpenMoba.Sim` build, automated tests и server smoke.
+- [x] Godot job должен скачать официальный `Godot_v4.7.2-stable_mono_linux_x86_64.zip` из `godotengine/godot-builds`.
+- [x] Проверить archive через официальный `SHA512-SUMS.txt` до extraction/execution.
+- [x] Не использовать third-party setup-godot action в bootstrap.
+- [x] Не коммитить Godot binary/export templates в repository.
+- [x] Export templates не устанавливать: acceptance — headless project load, не export.
 
 ## 8. Developer/agent verification documentation
 
-- [ ] Добавить короткую durable documentation с required toolchain и canonical local commands для core checks и Godot smoke.
-- [ ] Не создавать implementation diary/status report.
-- [ ] Не добавлять `make`, `just`, Docker или custom orchestration только для объединения команд.
+- [x] Добавить короткую durable documentation с required toolchain и canonical local commands для core checks и Godot smoke.
+- [x] Не создавать implementation diary/status report.
+- [x] Не добавлять `make`, `just`, Docker или custom orchestration только для объединения команд.
 
 Canonical evidence должно включать:
 
@@ -139,11 +139,11 @@ godot --headless --path src/OpenMoba.Client.Godot
 
 ## 9. Final verification и PR evidence
 
-- [ ] Запустить все применимые canonical checks локально/в harness environment.
+- [x] Запустить все применимые canonical checks локально/в harness environment.
 - [ ] Дождаться successful GitHub CI для `Spec Integrity` и нового code workflow.
-- [ ] Обновить этот `tasks.md`, отметив реально завершённые tasks.
+- [x] Обновить этот `tasks.md`, отметив реально завершённые tasks.
 - [ ] В PR body добавить delivered structure, verification results, tests, known limitations и deviations (если были).
-- [ ] Выполнить self-review на scope creep.
+- [x] Выполнить self-review на scope creep.
 - [ ] Передать PR независимому review-agent; не merge'ить самостоятельно.
 
 ## Stop conditions

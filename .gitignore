@@ -1,0 +1,19 @@
+# Build outputs
+**/bin/
+**/obj/
+**/.godot/
+**/export/
+
+# IDE / OS
+.vs/
+.idea/
+*.user
+*.suo
+*.userprefs
+.DS_Store
+Thumbs.db
+
+# Local tool caches
+.dotnet/
+.tools/
+*.nupkg
