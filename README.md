@@ -10,7 +10,7 @@ Open MOBA — модифицируемая платформа для много�
 
 ## Статус проекта
 
-Foundation governance и foundation architecture зафиксированы. Repository bootstrap материализует accepted boundaries в собираемый skeleton: shared `net8.0` contracts/simulation, standalone `net10.0` server/CLI, Godot 4.7.2 .NET client shell и machine-verifiable CLI/CI checks.
+Foundation governance, foundation architecture и Repository Bootstrap завершены. Repository содержит собираемый skeleton: shared `net8.0` contracts/simulation, standalone `net10.0` server/CLI, Godot 4.7.2 .NET client shell и machine-verifiable CLI/CI checks. Следующий этап — отдельный OpenSpec change `Simulation Foundation`.
 
 ## Быстрая проверка
 
