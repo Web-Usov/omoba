@@ -1,6 +1,8 @@
 # ADR-004: Authoritative simulation foundation
 
 - **Status:** Proposed
+- **Design Gate:** approved 2026-09-04
+- **Acceptance:** pending implementation evidence + Merge Gate
 - **Date:** 2026-09-04
 - **Related change:** `openspec/changes/simulation-foundation/`
 
@@ -186,7 +188,7 @@ Trade-offs:
 
 ## Verification required before Accepted
 
-ADR может стать `Accepted` только вместе с Design Gate/Merge Gate evidence, где tests доказывают:
+ADR может стать `Accepted` только вместе с implementation evidence и Merge Gate, где tests доказывают:
 
 - explicit tick advancement без wall-clock wait;
 - FIFO command processing;
