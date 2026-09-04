@@ -334,7 +334,7 @@ https://www.pcg-random.org/using-pcg-c-basic.html
 
 RNG остается `internal` foundation service. Host не получает API «вытащить случайное число», а future gameplay/Mod API не наследует этот internal interface автоматически.
 
-`SimulationConfig.Seed` инициализирует instance RNG; stream constant фиксируется implementation/version contract. Unit tests pin reference vectors.
+`SimulationConfig.Seed` инициализирует instance RNG; stream constant фиксируется implementation/version contract как `Pcg32.FoundationStream = 54` (совпадает с PCG basic demo `initseq`), поэтому `Seed = 42` pins public reference vector. Unit tests pin reference vectors.
 
 ### 10.3 RNG usage сейчас
 

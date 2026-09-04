@@ -15,6 +15,6 @@ public sealed class SimAssemblyLoadTests
         Assert.Equal("OpenMoba.Sim", assembly.GetName().Name);
         Assert.NotNull(bootstrapMarker);
         Assert.Equal("Sim", bootstrapMarker.Value);
-        Assert.Empty(assembly.GetExportedTypes());
+        Assert.Contains(assembly.GetExportedTypes(), type => type == typeof(SimulationInstance));
     }
 }
