@@ -1,9 +1,9 @@
 # Design: Simulation Foundation Open MOBA
 
-- **Status:** Proposed
-- **Gate:** Requires Design Gate
+- **Status:** Approved
+- **Gate:** Design Gate approved
 - **Date:** 2026-09-04
-- **Related ADR:** `docs/adr/ADR-004-authoritative-simulation-foundation.md` (Proposed)
+- **Related ADR:** `docs/adr/ADR-004-authoritative-simulation-foundation.md` (Proposed; Design Gate approved, acceptance pending implementation evidence + Merge Gate)
 
 ## 1. Purpose
 
@@ -563,7 +563,7 @@ Specs/ADR явно ограничивают compatibility boundary и исклю
 
 ## 18. Design Gate acceptance
 
-После approval Design Gate можно создавать `tasks.md` и отдавать change одному execution harness.
+Design Gate **approved 2026-09-04**. Можно создавать `tasks.md` и передавать change одному execution harness.
 
 Design approval означает согласие owner с ключевыми boundaries:
 
