@@ -11,16 +11,16 @@ Network protocol SHALL представлять player action как intent, к�
 - **WHEN** client отправляет supported movement intent
 - **THEN** server SHALL обработать его как request на изменение controlled entity, а не как trusted authoritative position
 
-### Requirement: Server валидирует control authority
-Gameplay-affecting intent SHALL применяться только если active session имеет server-owned authority над target entity.
+### Requirement: Target authoritative entity разрешается server из session ownership
+Movement intent SHALL NOT требовать client-provided authoritative target `EntityId`; server SHALL разрешать target из server-owned mapping active session -> controlled entity.
 
-#### Scenario: Session controls own entity
-- **WHEN** session отправляет valid intent для назначенной ей entity
-- **THEN** server MAY передать соответствующий approved simulation command в authoritative simulation
+#### Scenario: Session moves controlled entity
+- **WHEN** active session отправляет valid movement intent
+- **THEN** server SHALL применить intent только к entity, назначенной этой session server-owned control mapping
 
-#### Scenario: Session targets another entity
-- **WHEN** session A отправляет intent, пытающийся воздействовать на entity, назначенную session B
-- **THEN** server SHALL отклонить intent без authoritative mutation target entity
+#### Scenario: Client forges direct target payload
+- **WHEN** client пытается отправить unsupported payload/message, содержащий arbitrary target entity для обхода session mapping
+- **THEN** server SHALL отклонить такой protocol path без authoritative mutation чужой entity
 
 ### Requirement: Network client не получает arbitrary simulation command surface
 Network protocol MUST NOT позволять client напрямую создавать произвольные internal `OpenMoba.Sim` commands или обходить server validation boundary.
