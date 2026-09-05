@@ -44,22 +44,25 @@ Exit criteria:
 
 На этом этапе намеренно не выбирались ECS, окончательная world model, network transport, replication, tick rate, rollback, gameplay systems или финальная Mod API surface.
 
-## 3. Simulation Foundation — Next
+## 3. Simulation Foundation — Done
 
-**Цель:** определить и реализовать минимальную engine-neutral модель authoritative simulation.
+**Доказано:** authoritative simulation имеет минимальные engine-neutral semantics, достаточные как foundation для networking.
 
-Этап должен отдельно решить и проверить необходимые contracts для:
+Exit criteria:
 
-- logical game clock и advancement simulation;
-- world/entity representation;
-- commands/orders и events;
-- ownership состояния и lifecycle;
-- reproducible RNG/determinism guarantees в необходимом объёме;
-- automated headless simulation tests.
+- logical time представлен explicit discrete ticks и продвигается host-controlled `Advance()` без wall-clock dependency;
+- simulation владеет minimal authoritative world/entity lifecycle;
+- `EntityId` non-zero, monotonic и не переиспользуется внутри simulation instance;
+- host submit commands через FIFO command boundary, а mutation происходит только на следующем logical tick;
+- authoritative transitions возвращаются ordered step-scoped outcomes и доступны через read-only snapshots;
+- deterministic RNG принадлежит simulation instance и основан на pinned PCG32 implementation;
+- canonical headless scenario воспроизводим в принятой compatibility boundary;
+- standalone server smoke реально композирует `SimulationInstance`;
+- Godot/client/shared-contract boundaries остаются неизменными.
 
-Конкретный ECS library или другой world model выбирается только при наличии отдельного принятого design.
+ECS, production tick rate, movement/physics, networking/replication, replay/rollback и gameplay systems остаются deferred до отдельных changes.
 
-## 4. Networking Vertical Slice — Planned
+## 4. Networking Vertical Slice — Next
 
 **Цель:** доказать server-authoritative multiplayer на минимальном сценарии.
 
