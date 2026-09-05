@@ -1,7 +1,7 @@
 # Proposal: Networking Vertical Slice / Milestone A
 
-- **Status:** Proposed
-- **Intent Gate:** pending
+- **Status:** Approved
+- **Intent Gate:** approved 2026-09-05
 - **Date:** 2026-09-05
 
 ## Why
@@ -340,7 +340,7 @@ Accepted ADR-001, ADR-002 и ADR-004 не пересматриваются бе�
 
 ## Intent Gate decision requested
 
-Owner должен подтвердить именно **problem, outcome, scope и non-goals** этого proposal.
+Owner подтвердил **problem, outcome, scope и non-goals** этого proposal.
 
 Intent approval НЕ означает выбор:
 
