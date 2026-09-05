@@ -25,7 +25,7 @@ rules:
   design:
     - Явно фиксируй system boundaries, invariants, interfaces, data flow и ownership.
     - Указывай рассмотренные alternatives и объясняй выбор подхода.
-    - Включай verification strategy: tests, simulations, benchmarks или tooling по ситуации.
+    - "Включай verification strategy: tests, simulations, benchmarks или tooling по ситуации."
     - Ссылайся на существующие ADR. Если требуется новое фундаментальное решение, пометь ADR required вместо маскировки решения под implementation detail.
     - По возможности отделяй engine/platform decisions от правил reference game.
 
