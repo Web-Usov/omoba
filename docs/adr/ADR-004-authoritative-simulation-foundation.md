@@ -1,10 +1,10 @@
 # ADR-004: Authoritative simulation foundation
 
-- **Status:** Proposed
+- **Status:** Accepted
 - **Design Gate:** approved 2026-09-04
-- **Acceptance:** pending implementation evidence + Merge Gate
+- **Accepted:** 2026-09-05 after implementation evidence + Merge Gate
 - **Date:** 2026-09-04
-- **Related change:** `openspec/changes/simulation-foundation/`
+- **Related change:** `openspec/changes/archive/2026-09-05-simulation-foundation/`
 
 ## Context
 
@@ -186,9 +186,9 @@ Trade-offs:
 - determinism guarantee намеренно слабее rollback/lockstep engines;
 - future gameplay change всё равно должен определить systems/component architecture и numeric policy.
 
-## Verification required before Accepted
+## Verification evidence for acceptance
 
-ADR может стать `Accepted` только вместе с implementation evidence и Merge Gate, где tests доказывают:
+ADR принят после implementation evidence и Merge Gate. Automated verification доказывает:
 
 - explicit tick advancement без wall-clock wait;
 - FIFO command processing;
@@ -199,6 +199,8 @@ ADR может стать `Accepted` только вместе с implementation
 - repeated canonical simulation scenario equality;
 - standalone server composition smoke;
 - existing `Sim -> Godot` architecture prohibition.
+
+Implementation была смержена PR #10; canonical CI на финальном head прошёл до Merge Gate.
 
 ## Revisit when
 
