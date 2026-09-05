@@ -26,11 +26,11 @@ Automated verification SHALL доказать путь client intent -> server v
 - **THEN** authoritative simulation SHALL изменить position entity A и оба clients SHALL получить resulting authoritative observation
 
 ### Requirement: Canonical scenario покрывает authority violation
-Automated verification SHALL включать попытку client воздействовать на entity другой session и доказать отсутствие unauthorized authoritative mutation.
+Automated verification SHALL доказать, что client не может выбрать arbitrary authoritative target вместо server-owned session mapping.
 
-#### Scenario: Client A targets entity B
-- **WHEN** client A отправляет protocol-supported attempt воздействовать на entity B без authority
-- **THEN** server SHALL отклонить attempt и authoritative state entity B SHALL остаться неизменным вследствие этой попытки
+#### Scenario: Client A forges direct target payload
+- **WHEN** client A отправляет unsupported/malformed direct-target payload с identity entity B
+- **THEN** server SHALL отклонить path, authoritative state entity B SHALL остаться неизменным и normal session A control mapping SHALL не измениться
 
 ### Requirement: Canonical scenario покрывает invalid protocol input
 Automated verification SHALL включать bounded malformed или unsupported protocol input case.
