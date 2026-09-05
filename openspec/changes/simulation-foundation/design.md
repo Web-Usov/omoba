@@ -211,13 +211,25 @@ Generational/recycled IDs полезны для bounded slot storage, но до�
 Для доказательства generic lifecycle вводятся только два concrete foundation commands:
 
 ```csharp
-public abstract record SimulationCommand;
+public abstract record SimulationCommand
+{
+    private protected SimulationCommand() { }
+    private protected abstract void RestrictToFoundationCommands();
+}
 
-public sealed record CreateEntityCommand : SimulationCommand;
-public sealed record DestroyEntityCommand(EntityId EntityId) : SimulationCommand;
+public sealed record CreateEntityCommand : SimulationCommand
+{
+    private protected override void RestrictToFoundationCommands() { }
+}
+public sealed record DestroyEntityCommand(EntityId EntityId) : SimulationCommand
+{
+    private protected override void RestrictToFoundationCommands() { }
+}
 ```
 
 Это **не** gameplay command API и не Mod API. `Move`, `Attack`, `Cast`, player/session identifiers и network envelopes отсутствуют.
+
+Внешний consumer может создавать и копировать только эти два concrete command type. `private protected` constructor и abstract member закрывают создание внешних concrete subtypes, включая обход через обязательный protected copy-конструктор record. Abstract member служит только ограничением наследования и не участвует в processing; record equality/`with`, submission и lifecycle semantics сохраняются.
 
 ### 7.2 Submission ordering
 
